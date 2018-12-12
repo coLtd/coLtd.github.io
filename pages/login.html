@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon" />
+  <title>知源</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/button.css">
+  <link rel="stylesheet" href="css/font_662472_stb6tvgjvej.css">
+  <script src="js/jquery.min.js"></script>
+  <script src="js/axios.min.js"></script>
+  <script src="js/vue.min.js"></script>
+  <script src="js/conf.js"></script>
+  <script src="js/verifycode.js"></script>
+  <script src="js/common.js"></script>
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    .header {
+      height: 120px;
+      width: 100%;
+      border: 0px solid red;
+    }
+
+    .top {
+      width: 1200px;
+      margin: auto;
+      overflow: hidden;
+    }
+
+    .login {
+      width: 400px;
+      height: 432px;
+      background: #fff;
+      float: right;
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    input {
+      border: 0px;
+      margin-top: 5px;
+      outline: none;
+      background: transparent;
+      font-size: 14px;
+      flex: 1;
+    }
+
+    .input-container {
+      width: 340px;
+      height: 48px;
+      background: #f2f5f7;
+      margin: auto;
+      display: flex;
+      color: #c0c0c0;
+      margin-top: 20px;
+      line-height: 48px;
+    }
+
+    .input-container-icon {
+      margin: 0 20px
+    }
+
+    .btnMe {
+      width: 340px;
+      height: 48px;
+      background: #2196f3;
+      margin: auto;
+      margin-top: 20px;
+      color: #fff;
+      text-align: center;
+      line-height: 48px;
+      cursor: pointer;
+    }
+
+    .btnMe:active {
+      opacity: 0.7;
+    }
+
+    .btnMe:hover {
+      background: #38a7ff
+    }
+
+    .padding {
+      padding-left: 15px
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div class="top">
+      <a href="./home.html">
+        <img src="./img/login/logo.png" style="float: left;margin-top: 40px">
+      </a>
+    </div>
+    <div style="background: url(./img/login/beijing.png);height: 500px;margin-top:20px;font-size: 14px">
+      <div style="width: 1200px;margin: auto;overflow: hidden;">
+        <div class="login" v-show="show === 1">
+          <div style="margin-top:30px;margin-bottom: 30px;">
+            <span style="color: #666;font-size: 24px;">用户登录</span>
+          </div>
+          <div class="input-container">
+            <i class="iconfont icon-iconuser-copy input-container-icon"></i>
+            <input id="userName" style="flex:1" @blur="verifyUserName" @input="inputChange" type="text" maxlength="11"
+              v-model="username" placeholder="手机号">
+            <i class="iconfont icon-guanbi input-container-icon" v-show="clearButton" @click="clearUserName"></i>
+          </div>
+          <div class="input-container" style="margin-top:20px;">
+            <i class="iconfont icon-lock input-container-icon"></i>
+            <input :type="pwdType" maxlength="16" v-model="password" placeholder="8-16位字母或数字">
+            <i class="iconfont icon-chakan1 input-container-icon" v-if="pwdType==='password'" @click="pwdType='text'"></i>
+            <i class="iconfont icon-chakanyanjingshishifenxi2 input-container-icon" @click="pwdType='password'" style="color:#2196f3"
+              v-if="pwdType==='text'"></i>
+          </div>
+          <div style="text-align: left;width:340px;height: 48px;margin:auto;margin-top:20px;">
+            <input type="checkbox" style="zoom:170%;vertical-align:middle;" v-model="remeberMe"> 记住我
+          </div>
+          <span v-text="verifyText1" style="color:red"></span>
+          <div class="btnMe" @click="login">登录</div>
+          <br>
+          <div style="text-align: left;width:340px;height: 48px;margin:auto;margin-top:0px;">
+            <span style="color:#707070;cursor: pointer;" @click="show=2">忘记密码</span>
+          </div>
+        </div>
+
+        <!-- 验证手机号 -->
+        <div class="login" v-show="show===2">
+          <div style="margin-top:50px;margin-bottom: 40px;">
+            <span style="color: #666;font-size: 24px;">忘记密码</span>
+          </div>
+          <div class="input-container padding">
+            <input type="text" placeholder="请输入手机号" v-model="mobile2" maxlength="11">
+          </div>
+          <div class="input-container padding">
+            <input type="text" placeholder="请输入验证码" v-model="code2" maxlength="4">
+            <div id="verify" style="width:100px"></div>
+          </div>
+          <br>
+          <span v-if="verifyText2" style="color:red">手机号或验证码不正确</span>
+          <div class="btnMe" @click="nextStep()">下一步</div>
+          <br>
+          <div style="width:340px;height: 48px;margin:auto;margin-top:0px;">
+            <span style="color:#2196f3;cursor: pointer;" @click="backLogin">返回登录</span>
+          </div>
+        </div>
+
+        <!-- 修改密码 -->
+        <div class="login" v-show="show===3">
+          <div style="margin-top:50px;margin-bottom: 40px;">
+            <span style="color: #666;font-size: 24px;">忘记密码</span>
+          </div>
+          <div class="input-container padding">
+            <input type="text" placeholder="请输入短信验证码" type="number" v-model="smsCode" maxlength="6">
+            <div class="btnMe" style="width:120px;background: #1B9AF7;margin-top:0" @click="sendSmsMessage">{{btnText}}</div>
+          </div>
+          <div class="input-container padding">
+            <input placeholder="请输入新密码" maxlength="18" type="password" v-model="newPassword">
+          </div>
+          <br>
+          <span v-if="verifyText3" style="color:red">密码长度为6~18位、验证码长度为6位</span>
+          <span v-if="verifyText4" style="color:red">密码修改失败，请检查输入后重新操作</span>
+          <div class="btnMe" @click="modifyPassword">确定</div>
+          <br>
+          <div style="width:340px;height: 48px;margin:auto;margin-top:0px;">
+            <span style="color:#2196f3;cursor: pointer;" @click="backLogin">返回登录</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin:auto;margin-top:50px;color:#999;font-size: 12px;width: 200px;">云南神谷科技有限公司
+      &nbsp;&nbsp;&nbsp;@版权所有
+    </div>
+  </div>
+  <script>
+    new Vue({
+      el: '.header',
+      data() {
+        return {
+          username: '',
+          password: '',
+          show: 1,
+          remeberMe: false,
+          verifyText1: '',
+          verifyCode: '',
+          verifyText2: '',
+          mobile2: '',
+          code2: '',
+          verifyText2: false,
+          verifyText3: false,
+          verifyText4: false,
+          newPassword: '',
+          smsCode: '',
+          btnText: '获取验证码',
+          clearButton: false,
+          pwdType: 'password'
+        }
+      },
+      mounted() {
+        this.username = localStorage.getItem('un')
+        this.password = localStorage.getItem('pw')
+        if (this.username && this.password) {
+          this.remeberMe = true
+        }
+        insertPv('login.html')
+        var _this = this
+        document.onkeydown = function (e) {
+          var ev = document.all ? window.event : e
+          if (ev.keyCode === 13) {
+            _this.login()
+          }
+        }
+      },
+      methods: {
+        verifyUserName() {
+          this.username ? this.verifyText1 = '' : this.verifyText1 = "请输入账号"
+        },
+        inputChange() {
+          this.clearButton = this.username ? true : false
+        },
+        clearUserName() {
+          this.username = ''
+          this.clearButton = false
+        },
+        login() {
+          let _this = this
+          if (this.remeberMe) {
+            localStorage.setItem('un', this.username)
+            localStorage.setItem('pw', this.password)
+          } else {
+            localStorage.setItem('un', '')
+            localStorage.setItem('pw', '')
+          }
+          var params =
+            `grant_type=password&client_id=${OAuth2Config.clientId}&client_secret=1&username=${this.username}&password=${this.password}`
+          var header = {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }
+          axios.post(OAuth2Config.server + '/api/oauth2/token', params, header).then(resp => {
+            let rolesTmp = atob(resp.data.access_token.split('.')[1])
+            if (JSON.stringify(JSON.parse(rolesTmp).roles) === '{}') {
+              _this.verifyText1 = "您暂无系统使用权限，请联系企业管理员开通！"
+              return
+            }
+            localStorage.setItem('tk', resp.data.access_token)
+            location.href = '/oauth2/cb'
+          }).catch(error => {
+            _this.verifyText1 = "用户名或密码不正确！"
+          })
+        },
+        nextStep() {
+          if (this.verifyCode.validate(this.code2) && this.verifyMobile(this.mobile2)) {
+            this.show = 3
+            this.verifyText2 = false
+          } else {
+            this.verifyText2 = true
+          }
+        },
+        verifyMobile(p) {
+          var reg = /^[1][3,4,5,7,8,9][0-9]{9}$/
+          return p.length === 11 && reg.test(p)
+        },
+        backLogin() {
+          this.verifyText2 = false
+          this.verifyText1 = ''
+          this.verifyText3 = false
+          this.verifyText4 = false
+          this.mobile2 = ''
+          this.code2 = ''
+          this.show = 1
+        },
+        sendSmsMessage() {
+          console.log(this.btnText.indexOf('秒'))
+          if (!!(this.btnText.indexOf('秒') > 0)) {
+            console.log('dddddd返回了j8')
+            return
+          }
+          var _this = this
+          this.btnText = 60 + '秒'
+          axios.post(IssServerConfig.server1 + '/api/iss/tenant/staff/me/code', {
+            'mobile': this.mobile2
+          }).then(item => {
+            if (item.status === 200) {
+              var timer = setInterval(() => {
+                if (parseInt(_this.btnText.substr(0, _this.btnText.length - 1)) <= 1) {
+                  clearInterval(timer)
+                  _this.btnText = '重发验证码'
+                } else {
+                  _this.btnText = (parseInt(_this.btnText.substr(0, _this.btnText.length - 1)) - 1) + '秒'
+                }
+              }, 1000);
+            } else {
+              _this.btnText = '发送失败，请重发'
+            }
+          }).catch(err => {
+            _this.btnText = '发送失败，请重发'
+          })
+        },
+        modifyPassword() {
+          if (this.newPassword.length < 6 || this.smsCode.length != 6) {
+            this.verifyText3 = true
+            return
+          }
+          axios.put(IssServerConfig.server1 + '/api/iss/tenant/staff/me/pwd/reset', {
+            'mobile': this.mobile2,
+            code: this.smsCode,
+            password: this.newPassword
+          }).then(item => {
+            if (item.status === 200) {
+
+              this.show = 1
+            } else {
+              this.verifyText3 = false
+              this.verifyText4 = true
+            }
+          }).catch(err => {
+            this.verifyText3 = false
+            this.verifyText4 = true
+          })
+        }
+      },
+      watch: {
+        show: function (val1, val2) {
+          if (val1 === 2) {
+            this.verifyCode = new GVerify('verify')
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

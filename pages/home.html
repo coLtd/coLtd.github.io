@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon" />
+  <title>知源</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/button.css">
+  <link rel="stylesheet" href="http://at.alicdn.com/t/font_770466_nxpz6y6nb2n.css">
+  <script src="js/vue.min.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/axios.min.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/conf.js"></script>
+  <style>
+    [v-show] {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="jumbotron" style="padding: 0;background: #fff" id="app">
+    <div class="nav">
+      <div class="container">
+        <div style="float: left;cursor: pointer;" href="./home.html">
+          <img src="./img/logo.png" style="margin-top: 25px;">
+        </div>
+        <div style="float: right;">
+          <ul>
+            <li class="menu" :class="{isactive:activeMenu===1}">
+              <a @click="activeMenu=1;window.location.hash='#'" style="color: white;display:block;">首页</a>
+            </li>
+            <!-- <li class="menu">
+              <a href="./coop.html" style="color: white;display:block;">合作商家</a>
+            </li> -->
+            <li class="menu" :class="{isactive:activeMenu===2}">
+              <a @click="activeMenu=2;window.location.hash='#jionsection'" id="thisSb" style="color: white;display:block;">商家入驻</a>
+            </li>
+            <li class="menu">
+              <a href="./about.html" style="color: white;display:block;">关于我们</a>
+            </li>
+            <li class="menu">
+              <a href="./login.html" style="color: white">会员登录</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="myCarousel" class="carousel slide" style="width:100%;height:auto;background: #fff;overflow: hidden;">
+      <!-- <div id="myCarousel" class="carousel slide" style="width:100%;height:auto;background: #fff;overflow: hidden;" :style="{height: screenHeight +'px'}"> -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" v-for="(i, index) in bannerList" :data-slide-to="index" :class="{active:index==0}"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item" v-for="(i, index) in bannerList" :class="{active:index==0}">
+          <!-- <div style="width:100%" :style="{height: screenHeight +'px', backgroundImage: 'url(' + i.image + ')'"></div> -->
+          <img :src="i.image" alt="First slide" style="width:100%;height:auto" />
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="container" style="padding: 20px;">
+      <div class="col-md-8" style="padding-right: 0px">
+        <div style="display:flex">
+          <img src="./img/xiaotu.png" alt="">
+          <div style="font:bold 14px 'Microsoft YaHei';padding-top: 10px">
+            <span style="font-weight: normal;padding-top: 15px">CREATE AN "ID CARD"</span>
+            <br>
+            <span style="padding-top: 5px;display: block">FOR EACH PRODUCT</span>
+          </div>
+        </div>
+        <div class="index-left">
+          <span class="index-title">为每一个农产品打造一张"身份证"</span>
+          <br>
+          <span class="index-content">知源是通过结合物联网、大数据、云计算
+            和LBS地理信息等技术，通过感知设备、防伪标签和二维码等技术，为农产品建立“身份证”制度，实现农产品从基地生产、加工流通、肥药实施、农残检测的信息的全程可追溯。直接打通生产端与消费端，建立农产品品牌，实现知根溯源。通过大数据采集分析，监测农产品流通及消费群体分群，运用大数据提前指导精准品牌营销。</span>
+        </div>
+      </div>
+      <div class="col-md-4" style="padding-left: 0px">
+        <img src="./img/index-content-banner.png" style="margin-top: 30px;width: 100%">
+      </div>
+    </div>
+    <div class="jumbotron" style="text-align: center;background: white">
+      <div class="container">
+        <span style="font-weight: normal;color: #666">TRACEABILITY
+          <span style="font:bold 14px 'Microsoft YaHei'">PLATFORM</span>
+        </span>
+        <br>
+        <span class="index-title">什么是好的追溯平台？</span>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="container">
+          <div class="col-md-4">
+            <div class="index-item">
+              <div class="index-cile" style="background:rgba(97,203,79,0.2);padding-top:15px">
+                <div style="background:rgba(97,203,79,0.4);width: 118px;height:118px;line-height: 118px;border-radius: 118px;margin: auto;padding-top: 20px">
+                  <div style="background: #61cb4F;width: 78px;height:78px;line-height: 78px;border-radius: 78px;margin: auto;">
+                    <img src="./img/zhuisu.png" style="margin-top:10px;opacity: 0.9;">
+                  </div>
+                </div>
+              </div>
+              <div class="index-title-cile">
+                溯源信息
+              </div>
+              <div class="index-content-cile">
+                实时监测 实时发
+              </div>
+            </div>
+          </div>
+          <div class="index-item col-md-4">
+            <div class="index-item">
+              <div class="index-cile" style="background:rgba(89,175,244,0.2);padding-top:15px">
+                <div style="background:rgba(89,175,244,0.4);width: 118px;height:118px;line-height: 118px;border-radius: 118px;margin: auto;padding-top: 20px">
+                  <div style="background: #59aff4;width: 78px;height:78px;line-height: 78px;border-radius: 78px;margin: auto;">
+                    <img src="./img/wenjian.png" style="margin-top:0px;opacity: 0.9;">
+                  </div>
+                </div>
+              </div>
+              <div class="index-title-cile">
+                傻瓜式
+              </div>
+              <div class="index-content-cile">
+                编辑追溯档案
+              </div>
+            </div>
+          </div>
+          <div class="index-item col-md-4">
+            <div class="index-item">
+              <div class="index-cile" style="background:rgba(102,231,202,0.2);padding-top:15px">
+                <div style="background:rgba(102,231,202,0.4);width: 118px;height:118px;line-height: 118px;border-radius: 118px;margin: auto;padding-top: 20px">
+                  <div style="background: #66e7ca;width: 78px;height:78px;line-height: 78px;border-radius: 78px;margin: auto;">
+                    <img src="./img/dunpai.png" style="margin-top:0px;opacity: 0.9;">
+                  </div>
+                </div>
+              </div>
+              <div class="index-title-cile">
+                保障信用
+              </div>
+              <div class="index-content-cile">
+                打造品牌 分析市场
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container" style="margin-top: 40px">
+          <div class="index-item col-md-4">
+            <div class="index-item">
+              <div class="index-cile" style="background:rgba(255,205,55,0.2);padding-top:15px">
+                <div style="background:rgba(255,205,55,0.4);width: 118px;height:118px;line-height: 118px;border-radius: 118px;margin: auto;padding-top: 20px">
+                  <div style="background: #ffcd37;width: 78px;height:78px;line-height: 78px;border-radius: 78px;margin: auto;">
+                    <img src="./img/gouwuche.png" style="margin-top:0px;opacity: 0.9;">
+                  </div>
+                </div>
+              </div>
+              <div class="index-title-cile">
+                以消费者语言
+              </div>
+              <div class="index-content-cile">
+                展现产品质量
+              </div>
+            </div>
+          </div>
+          <div class="index-item col-md-4">
+            <div class="index-item">
+              <div class="index-cile" style="background:rgba(49,210,116,0.2);padding-top:15px">
+                <div style="background:rgba(49,210,116,0.4);width: 118px;height:118px;line-height: 118px;border-radius: 118px;margin: auto;padding-top: 20px">
+                  <div style="background: #31d274;width: 78px;height:78px;line-height: 78px;border-radius: 78px;margin: auto;">
+                    <img src="./img/chakan1.png" style="margin-top:0px;opacity: 0.9;">
+                  </div>
+                </div>
+              </div>
+              <div class="index-title-cile">
+                平台运营
+              </div>
+              <div class="index-content-cile">
+                批量上线统一维护
+              </div>
+            </div>
+          </div>
+          <div class="index-item col-md-4">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="jumbotron" style="background: url(./img/beijingtu-2.png);text-align:center">
+      <br>
+      <br>
+      <br>
+      <span style="font-weight: normal;color: #fff">EASY TO TRACE
+        <span style="font:bold 14px 'Microsoft YaHei'">FOUR STEPS TO GET</span>
+      </span>
+      <br>
+      <span class="index-title" style="color:#fff">轻松追溯 四步搞定！</span>
+      <br>
+      <br>
+
+      <div class="container">
+        <div style="display:flex">
+          <div style="flex:1;">
+            <div class="index-item-1">
+              <img src="./img/dangan.png" style="margin-top:40px;">
+              <p style="color:#fff;font-size:18px">进入知源填写产品档案</p>
+            </div>
+          </div>
+          <div style="flex:1;">
+            <div class="index-item-1">
+              <img src="./img/erweima.png" style="margin-top:40px;">
+              <p style="color:#fff;font-size:18px">打印粘贴二维码</p>
+            </div>
+          </div>
+          <div style="flex:1;">
+            <div class="index-item-1">
+              <img src="./img/saomiao.png" style="margin-top:40px;">
+              <p style="color:#fff;font-size:18px">手机扫一扫</p>
+            </div>
+          </div>
+          <div style="flex:1;">
+            <div class="index-item-1">
+              <img src="./img/chakan.png" style="margin-top:40px;">
+              <p style="color:#fff;font-size:18px">查看信息产品知根知源</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="jumbotron" style="background: #f4f5f9;height:550px;text-align: center">
+      <br>
+      <br>
+      <br>
+      <span style="font-weight: normal;color: #666">MERCHANTS
+        <span style="font:bold 14px 'Microsoft YaHei'">SETTLED</span>
+      </span>
+      <br>
+      <span class="index-title">商家入驻</span>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="container" style="max-width: 800px;" name="jionsection" id="jionsection">
+        <div style="display: flex;padding: 10px">
+          <div class="input-container" style="margin-right: 12px;border-radius: 4px">
+            <input type="text" placeholder="联系人" v-model="name" maxlength="12">
+          </div>
+          <div class="input-container" style="margin-left: 12px;border-radius: 4px">
+            <input type="text" placeholder="手机号" v-model="phone" maxlength="11">
+          </div>
+        </div>
+        <div style="display: flex;padding: 10px">
+          <div class="input-container" style="border-radius: 4px">
+            <input type="text" placeholder="商家名称" v-model="exp" maxlength="20">
+          </div>
+        </div>
+        <span v-text="info" style="color:red"></span>
+        <div style="display: flex;padding: 10px">
+          <div class="input-container">
+            <div class="submit-button" @click="join()">提交</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="height:240px;border:0px solid red;line-height: 240px;">
+      <div class="col-md-3" style="margin-left: 35px">
+        <img src="./img/logo2.png" style="opacity: 0.7;" alt="">
+      </div>
+      <div class="col-md-8">
+        <div style="display:flex;">
+          <div style="flex:1;">
+            <div style="font:bold 14px 'Microsoft YaHei';color:#666;margin-top:110px;text-align: right">
+              <i class="iconfont icon-dianhuahover"></i>&nbsp;咨询电话
+              <br>
+              <span style="font-weight: normal;color: #666">&nbsp;&nbsp;&nbsp;&nbsp;{{expInfo[0].content || ''}}</span>
+            </div>
+          </div>
+          <div style="flex:1">
+            <div style="font:bold 14px 'Microsoft YaHei';color:#666;margin-top:110px;text-align: right">
+              <i class="iconfont icon-youxiang"></i>&nbsp;咨询邮箱
+              <br>
+              <span style="font-weight: normal;color: #666">&nbsp;&nbsp;&nbsp;&nbsp;{{expInfo[1].content || ''}}</span>
+            </div>
+          </div>
+          <div style="flex:1">
+            <div style="font:bold 14px 'Microsoft YaHei';color:#666;margin-top:110px; text-align: right">
+              <i class="iconfont icon-qq"></i>&nbsp;咨询QQ
+              <br>
+              <span style="font-weight: normal;color: #666">&nbsp;&nbsp;&nbsp;&nbsp;{{expInfo[2].content || ''}}</span>
+            </div>
+          </div>
+          <div style="flex:1">
+            <div style="font:bold 14px 'Microsoft YaHei';color:#666;margin-top:110px; text-align: right">
+              <i class="iconfont icon-shijian"></i>&nbsp;上班时间
+              <br>
+              <span style="font-weight: normal;color: #666">&nbsp;&nbsp;&nbsp;&nbsp;9:00-17:30</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="left:0;top:0;bottom:0;right:0;position:fixed;background: rgba(0,0,0,0.3);z-index: 1001;" v-if="dialog">
+      <div style="position:fixed;z-index: 101;left:0; right:0;margin: 100px auto;width: 600px;height:150px;line-height:100px;padding:25px;border-radius:5px;background:#fff;box-shadow: 0 0 100px #000;">
+        信息已提交成功，1天内会有农事顾问与您联系，请耐心等待！
+        <div class="btn-close" @click="dialog=false;clearInterval(timer)">确定({{currentIndex}})</div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <!-- this is bottom -->
+  <!-- dialog -->
+  <script>
+    if (window.location.href.indexOf('jionsection') >= 0) {
+      window.location.hash = '#jionsection'
+    }
+    var b = new Vue({
+      el: '#app',
+      data() {
+        return {
+          activeMenu: 1,
+          exp: '',
+          name: '',
+          phone: '',
+          info: '',
+          show: false,
+          bannerList: [],
+          expInfo: [{
+              content: ''
+            },
+            {
+              content: ''
+            },
+            {
+              content: ''
+            }
+          ],
+          dialog: false,
+          timer: null,
+          currentIndex: 3,
+          screenHeight: document.documentElement.clientHeight,
+          sw: 1
+        }
+      },
+      updated() {
+        var _this = this
+        if (this.sw === 1) {
+          setTimeout(() => {
+            if (window.location.href.indexOf('jionsection') >= 0) {
+              _this.activeMenu = 2
+              window.location.hash = '#jionsection'
+              $(window).scrollTop($(document).height())
+            }
+          }, 100)
+          _this.sw = 0
+        }
+      },
+      mounted() {
+        var _this = this
+        $(window).scroll(function () {
+          if (($(window).scrollTop() + document.documentElement.clientHeight) <= $(document).height() -
+            50) {
+            _this.activeMenu = 1
+          } else {
+            _this.activeMenu = 2
+          }
+        });
+        axios.post(MongoConfig.ftrace.base + '/api/mongo/ftrace/ftrace.front_banner/find', {
+          sort: {
+            order: 1
+          }
+        }).then((item) => {
+          _this.bannerList = item.data.items
+          setTimeout(() => {
+            $("#myCarousel").carousel('cycle');
+          }, 1000);
+        })
+        axios.post(MongoConfig.ftrace.base + '/api/mongo/ftrace/ftrace.front_contact/find', {
+          sort: {
+            order: 1
+          }
+        }).then((item) => {
+          this.expInfo = item.data.items
+          this.expInfo
+          // console.log(this.expInfo)
+        })
+        insertPv('home.html')
+      },
+      methods: {
+        gojionsection() {
+          console.log(1)
+          window.location.hash = '#jionsection'
+        },
+        join() {
+          if (this.exp == "") {
+            this.info = '商家名称不能为空'
+            return
+          }
+          if (this.name == "") {
+            this.info = '联系人不能为空'
+            return
+          }
+          var reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+          if (!this.phonelength == 11 || !reg.test(this.phone)) {
+            this.info = '手机号码不正确'
+            return
+          }
+          var _this = this
+          let params = {
+            company: this.exp,
+            mobile: this.phone,
+            contact: this.name
+          }
+          axios.post(MongoConfig.ftrace.base + '/api/mongo/ftrace/ftrace.apply_company', params).then((
+            item) => {
+            _this.dialog = true
+            _this.currentIndex = 3;
+            _this.timer = setInterval(() => {
+              console.log(_this.currentIndex)
+              if (_this.currentIndex <= 1) {
+                clearInterval(_this.timer)
+                _this.dialog = false
+                return
+              }
+              _this.currentIndex = _this.currentIndex - 1
+            }, 1000);
+            _this.exp = ""
+            _this.name = ""
+            _this.phone = ""
+            _this.info = ''
+          })
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

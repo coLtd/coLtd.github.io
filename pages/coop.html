@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>知源</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="js/vue.min.js"></script>
+  <script src="js/axios.min.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/button.css">
+  <script src="js/mongo.min.js"></script>
+  <script src="js/conf.js"></script>
+  <script src="js/common.js"></script>
+</head>
+
+<body>
+  <div class="jumbotron" style="padding: 0" id="app">
+    <div class="nav">
+      <div class="container">
+        <div style="float: left;">
+          <img src="./img/logo.png" style="margin-top: 25px;">
+
+        </div>
+        <div style="float: right;">
+          <ul>
+            <li class="menu">
+              <a href="./home.html" style="color: white;display:block;">首页</a>
+            </li>
+            <!-- <li class="menu isactive">
+              <a href="./coop.html" style="color: white;display:block;">合作商家</a>
+            </li> -->
+            <li class="menu">
+              <a href="./join.html" style="color: white;display:block;">商家入驻</a>
+            </li>
+            <li class="menu">
+              <a href="./about.html" style="color: white;display:block;">关于我们</a>
+            </li>
+            <li class="menu">
+              <a href="./login.html" style="color: white">会员登录</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="myCarousel" class="carousel slide" style="width:100%;height:150px;background: rgba(0,0,0,0.7);overflow: hidden;">
+      <ol class="carousel-indicators">
+        <!-- <li data-target="#myCarousel" v-for="(i, index) in bannerList" :data-slide-to="index" :class="{active:index==1}"></li> -->
+      </ol>
+      <div class="carousel-inner">
+        <div class="item" v-for="(i, index) in bannerList" :class="{active:index==1}">
+          <!-- <img :src="i.image" alt="First slide" style="width:100%;height:600px"/> -->
+        </div>
+      </div>
+    </div>
+    <div class="container" style="height: 800px;">
+
+    </div>
+
+    <div class="jumbotron" style="background: #000">
+      <div class="container">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div v-for="i in expInfo">
+          <div>{{i.name}}: &nbsp;&nbsp;{{i.content}}</div>
+        </div>
+        <br>
+        <br>
+        <br>
+      </div>
+    </div>
+  </div>
+  <script>
+    var b = new Vue({
+      el: '#app',
+      data() {
+        return {
+          about_text: '',
+          bannerList: [],
+          expInfo: {}
+        }
+      },
+      mounted() {
+        this.about()
+        axios.post(MongoConfig.ftrace.base + '/api/mongo/ftrace/ftrace.front_banner/find', {
+          sort: {
+            order: 1
+          }
+        }).then((item) => {
+          this.bannerList = item.data.items
+          console.log(this.bannerList[0].image)
+        })
+        axios.post(MongoConfig.ftrace.base + '/api/mongo/ftrace/ftrace.front_contact/find', {
+          sort: {
+            order: 1
+          }
+        }).then((item) => {
+          console.log(item)
+          this.expInfo = item.data.items
+        })
+        insertPv('coop.html')
+      },
+      methods: {
+        about() {
+          var _this = this
+          axios.post(MongoConfig.ftrace.base + '/api/mongo/ftrace/ftrace.front_about/find').then((item) => {
+            console.log(item.data)
+            _this.about_text = item.data.items[0].info
+          })
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

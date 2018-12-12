@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>知源</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/button.css">
+  <script src="js/vue.min.js"></script>
+  <script src="js/axios.min.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/conf.js"></script>
+  <script src="js/common.js"></script>
+</head>
+
+<body>
+  <div class="jumbotron" style="padding: 0;background:#fff" id="app">
+    <div class="nav">
+      <div class="container">
+        <div style="float: left;cursor: pointer;" href="./home.html">
+          <img src="./img/logo.png" style="margin-top: 25px;">
+        </div>
+        <div style="float: right;">
+          <ul>
+            <li class="menu">
+              <a href="./home.html" style="color: white;display:block;">首页</a>
+            </li>
+            <!-- <li class="menu">
+              <a href="./coop.html" style="color: white;display:block;">合作商家</a>
+            </li> -->
+            <li class="menu">
+              <a href="./home.html#jionsection" style="color: white;display:block;">商家入驻</a>
+            </li>
+            <li class="menu isactive">
+              <a href="./about.html" style="color: white;display:block;">关于我们</a>
+            </li>
+            <li class="menu">
+              <a href="./login.html" style="color: white">会员登录</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="myCarousel" class="carousel slide" style="width:100%;height:auto;background: rgba(0,0,0,0.7);overflow: hidden;">
+      <img src="./img/lunbo1.png" style="width:100%;height:auto;">
+    </div>
+    <div class="container" style="padding: 20px;">
+      <br>
+      <br>
+      <br>
+      <div class="col-md-9" style="padding-right: 0px">
+        <div style="display:flex">
+          <img src="./img/xiaotu.png" alt="">
+          <div style="font:bold 14px 'Microsoft YaHei';padding-top: 10px">
+            <span style="font-weight: normal;padding-top: 15px">YUNNAN AGRITHINGS</span>
+            <br>
+            <span style="padding-top: 5px;display: block">TECHNOLOGY CO.,LTD</span>
+          </div>
+        </div>
+        <div class="index-left">
+          <span class="index-title">云南神谷科技股份有限公司</span>
+          <br>
+          <span class="index-content">{{about_text}}</span>
+        </div>
+      </div>
+      <div class="col-md-3" style="padding-left: 0px">
+        <img src="./img/fangkuaitu.png" style="margin-top: 30px">
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="jumbotron" style="background: #f3f3f3;text-align: center">
+      <div class="container">
+        <br>
+        <br>
+        <br>
+        <span style="font-weight: normal;color: #666">JOINT
+          <span style="font:bold 14px 'Microsoft YaHei'">VENTURE</span>
+        </span>
+        <br>
+        <span class="index-title">合作商家</span>
+        <div class="container" style="padding-top: 107px;">
+          <div class="col-md-4" style="text-align: center">
+            <img src="./img/1.png" alt="">
+            <br>
+            <br>
+            <span style="color: #666">云天化集团</span>
+          </div>
+          <div class="col-md-4">
+            <img src="./img/2.png" alt="">
+            <br>
+            <br>
+            <span style="color: #666">阿里巴巴</span>
+          </div>
+          <div class="col-md-4">
+            <img src="./img/3.png" alt="">
+            <br>
+            <br>
+            <span style="color: #666">云南农垦集团</span>
+          </div>
+        </div>
+        <div class="container" style="padding-top: 112px;padding-bottom: 120px">
+          <div class="col-md-4">
+            <img src="./img/4.png" alt="">
+            <br>
+            <br>
+            <span style="color: #666">京东</span>
+          </div>
+          <div class="col-md-4">
+            <img src="./img/5.png" alt="">
+            <br>
+            <br>
+            <span style="color: #666">四苹果（北京）</span>
+          </div>
+          <div class="col-md-4">
+            <img src="./img/6.png" alt="">
+            <br>
+            <br>
+            <span style="color: #666">中国农业大学</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="height:240px;border:0px solid red;line-height: 240px;">
+      <div class="col-md-3" style="margin-left: 35px">
+        <img src="./img/logo2.png" style="opacity: 0.7;" alt="">
+      </div>
+      <div class="col-md-8">
+        <div style="display:flex;">
+          <div style="flex:1;">
+            <div style="font:bold 14px 'Microsoft YaHei';color:#666;margin-top:110px;text-align: right">
+              <i class="iconfont icon-dianhuahover"></i>&nbsp;咨询电话
+              <br>
+              <span style="font-weight: normal;color: #666">&nbsp;&nbsp;&nbsp;&nbsp;{{expInfo[0].content || ''}}</span>
+            </div>
+          </div>
+          <div style="flex:1">
+            <div style="font:bold 14px 'Microsoft YaHei';color:#666;margin-top:110px;text-align: right">
+              <i class="iconfont icon-youxiang"></i>&nbsp;咨询邮箱
+              <br>
+              <span style="font-weight: normal;color: #666">&nbsp;&nbsp;&nbsp;&nbsp;{{expInfo[1].content || ''}}</span>
+            </div>
+          </div>
+          <div style="flex:1">
+            <div style="font:bold 14px 'Microsoft YaHei';color:#666;margin-top:110px; text-align: right">
+              <i class="iconfont icon-qq"></i>&nbsp;咨询QQ
+              <br>
+              <span style="font-weight: normal;color: #666">&nbsp;&nbsp;&nbsp;&nbsp;{{expInfo[2].content || ''}}</span>
+            </div>
+          </div>
+          <div style="flex:1">
+            <div style="font:bold 14px 'Microsoft YaHei';color:#666;margin-top:110px; text-align: right">
+              <i class="iconfont icon-shijian"></i>&nbsp;上班时间
+              <br>
+              <span style="font-weight: normal;color: #666">&nbsp;&nbsp;&nbsp;&nbsp;9:00-17:30</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var b = new Vue({
+      el: '#app',
+      data() {
+        return {
+          about_text: '',
+          bannerList: [],
+          expInfo: [
+            {
+              content: ''
+            },
+            {
+              content: ''
+            },
+            {
+              content: ''
+            }
+          ],
+        }
+      },
+      mounted() {
+        getBannerList().then(items => this.bannerList = items)
+        getContactList().then(items => this.expInfo = items)
+        getAbout().then(item => this.about_text = item)
+        insertPv('about.html')
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,161 @@
+.container-left {
+    float: left;
+}
+
+.container-right {
+    float: right
+}
+
+.menu {
+    float: left;
+    color: #fff;
+    font-size: 16px;
+    line-height: 111px;
+    list-style: none;
+    display: block;
+    text-align: center;
+    width: 118px;
+}
+
+.menu:hover {
+    background: #61cb4f;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.isactive {
+    background: #61cb4f;
+}
+
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.index-left {
+    flex: 1;
+    padding-right: 40px;
+}
+
+.index-title {
+    font-family: 'Microsoft YaHei';
+    font-weight: 600;
+    font-size: 30px;
+    color: #333;
+    line-height: 50PX;
+    letter-spacing: 1px;
+}
+
+.index-content {
+    font-size: 16px;
+    color: #333;
+    line-height: 40px;
+}
+
+.index-item-1 {
+    width: 255px;
+    height: 282px;
+    /* background:rgba(2,2,2,0.2); */
+    margin: auto;
+    text-align: center;
+    line-height: 100px;
+    padding-top: 30px;
+}
+
+.index-cile {
+    width: 150px;
+    height: 150px;
+    border-radius: 150px;
+    line-height: 150px;
+    margin: auto;
+    text-align: center
+}
+
+.index-item {
+    text-align: center;
+}
+
+.index-title-cile {
+    font-family: 'Microsoft YaHei';
+    font-size: 18px;
+    color: #333;
+    font-weight: 500;
+    width: 130px;
+    margin: auto;
+    line-height: 40px;
+    margin-top: 20px;
+}
+
+.index-content-cile {
+    font-family: 'Microsoft YaHei';
+    font-size: 16px;
+    color: #666;
+    line-height: 25px;
+}
+
+.jumbotron {
+    margin: 0;
+}
+
+.validateLabel {
+    color: red;
+    height: 30px;
+}
+
+.input-container {
+    flex: 1;
+    height: 59px;
+    line-height: 59px;
+    background: white
+}
+
+.input-container input {
+    font-size: 18px;
+    width: 97%;
+    height: 100%;
+    border: none;
+    outline: none;
+    margin: 0 15px;
+}
+
+.submit-button {
+    background: #61cb4f;
+    font-size: 18px;
+    color: white;
+    border-radius: 4px;
+}
+
+.submit-button:hover {
+    opacity: 0.7;
+}
+
+.submit-button:active {
+    opacity: 0.4;
+}
+.btn-close{
+    background: #61cb4f;
+    width: 76px;
+    height:33px;
+    line-height:33px;
+    text-align: center;
+    border-radius: 5px;
+    color:#fff;
+    position: absolute;
+    right:25px;
+    bottom:25px;
+    cursor: pointer;
+}
+.btn-close:hover{
+    opacity: 0.7;
+}
+.btn-close:active{
+    opacity: 0.3;
+}
