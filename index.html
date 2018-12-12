@@ -2,9 +2,11 @@
 <html>
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
   <link href='resource/icon.css' rel="stylesheet">
   <link href="resource/vuetify.min.css" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <script src="resource/vue.js"></script>
+  <script src="resource/vuetify.js"></script>
 </head>
 
 <body>
@@ -32,7 +34,7 @@
                     <strong class="display-4 font-weight-regular mr-4">8</strong>
                     <v-layout column justify-end>
                       <div class="headline font-weight-light">Monday</div>
-                      <div class="text-uppercase font-weight-light">{{message}}</div>
+                      <div class="text-uppercase font-weight-light">February 2015</div>
                     </v-layout>
                   </v-layout>
                 </v-container>
@@ -104,8 +106,7 @@
     </v-app>
   </div>
 
-  <script src="resource/vue.js"></script>
-  <script src="resource/vuetify.js"></script>
+
   <script>
     new Vue({
       el: '#app',
